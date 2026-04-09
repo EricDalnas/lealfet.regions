@@ -1,0 +1,30 @@
+{
+  "name": "leaflet.regions",
+  "version": "0.1.0",
+  "description": "A simple Leaflet plugin for rendering and binding data to GeoJSON regions.",
+  "author": "Eric D",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricDalnas/lealfet.regions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EricDalnas/lealfet.regions/issues"
+  },
+  "homepage": "https://github.com/EricDalnas/lealfet.regions#readme",
+  "main": "src/leaflet.regions.js",
+  "files": [
+    "src",
+    "demo",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "npx serve . -l 3000"
+  },
+  "sideEffects": false,
+  "keywords": ["leaflet", "regions", "geojson", "map"],
+  "license": "MIT",
+  "peerDependencies": {
+    "leaflet": ">=1.0.0"
+  }
+}

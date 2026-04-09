@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>leaflet.regions Demo</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    #panel {
+      position: absolute;
+      top: 10px;
+      left: 50px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 10px;
+      font-family: Segoe UI, Arial, sans-serif;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div id="panel"><strong>leaflet.regions</strong><br/>Natural Earth countries colored by continent (Public Domain)</div>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="../src/leaflet.regions.js"></script>
+  <script>
+    var map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; CARTO',
+      subdomains: 'abcd'
+    }).addTo(map);
+
+    // Natural Earth 1:110m Admin 0 Map Units. Public Domain. https://www.naturalearthdata.com/
+    L.regionsLayer({
+      geoJsonUrl: 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_map_units.geojson',
+      featureKey: function (feature) {
+        var props = feature && feature.properties ? feature.properties : {};
+        return String(props.CONTINENT || '').toUpperCase();
+      },
+      label: function () { return ''; },
+      data: {
+        'AFRICA':        { color: '#f59e0b', label: 'Africa',        labelLatLng: [0, 20],    popupContent: '<b>Africa</b><br/>Natural Earth 1:110m countries' },
+        'ASIA':          { color: '#ef4444', label: 'Asia',          labelLatLng: [40, 90],   popupContent: '<b>Asia</b><br/>Natural Earth 1:110m countries' },
+        'EUROPE':        { color: '#3b82f6', label: 'Europe',        labelLatLng: [54, 25],   popupContent: '<b>Europe</b><br/>Natural Earth 1:110m countries' },
+        'NORTH AMERICA': { color: '#10b981', label: 'North America', labelLatLng: [45, -100], popupContent: '<b>North America</b><br/>Natural Earth 1:110m countries' },
+        'SOUTH AMERICA': { color: '#8b5cf6', label: 'South America', labelLatLng: [-15, -55], popupContent: '<b>South America</b><br/>Natural Earth 1:110m countries' },
+        'OCEANIA':       { color: '#06b6d4', label: 'Oceania',       labelLatLng: [-25, 140], popupContent: '<b>Oceania</b><br/>Natural Earth 1:110m countries' },
+        'ANTARCTICA':    { color: '#94a3b8', label: 'Antarctica',    labelLatLng: [-85, 0],   popupContent: '<b>Antarctica</b><br/>Natural Earth 1:110m countries' }
+      },
+      labelMinZoom: 1,
+    }).addTo(map);
+  </script>
+</body>
+</html>
