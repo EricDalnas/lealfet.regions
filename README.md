@@ -4,7 +4,7 @@ A generic Leaflet plugin for rendering GeoJSON regions and binding keyed data.
 
 ## Live Demo
 
-[View the interactive demo](https://ericdalnas.github.io/lealfet.regions/demo/index.html)
+[View the interactive demo](https://ericdalnas.github.io/leaflet.regions/demo/index.html)
 
 ## Browser usage
 

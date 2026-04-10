@@ -5,12 +5,12 @@
   "author": "Eric D",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EricDalnas/lealfet.regions.git"
+    "url": "git+https://github.com/EricDalnas/leaflet.regions.git"
   },
   "bugs": {
-    "url": "https://github.com/EricDalnas/lealfet.regions/issues"
+    "url": "https://github.com/EricDalnas/leaflet.regions/issues"
   },
-  "homepage": "https://github.com/EricDalnas/lealfet.regions#readme",
+  "homepage": "https://github.com/EricDalnas/leaflet.regions#readme",
   "main": "src/leaflet.regions.js",
   "files": [
     "src",
