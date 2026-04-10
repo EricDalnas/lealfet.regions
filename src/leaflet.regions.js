@@ -244,7 +244,10 @@
       if (popupContent && this.options.popupAction) {
         layer.bindPopup(popupContent, { maxWidth: 320 });
         if (this.options.popupAction === 'hover') {
-          layer.on('mouseover', function (e) { this.openPopup(e.latlng); });
+          layer.on('mouseover', function () {
+            var center = this.getBounds ? this.getBounds().getCenter() : null;
+            this.openPopup(center);
+          });
           layer.on('mouseout', function () { this.closePopup(); });
         }
       }
