@@ -242,13 +242,29 @@
         : resolve(this.options.popupContent, feature, rd);
 
       if (popupContent && this.options.popupAction) {
-        layer.bindPopup(popupContent, { maxWidth: 320 });
+         layer.bindPopup(popupContent, { maxWidth: 320 });
         if (this.options.popupAction === 'hover') {
+          var closeTimer = null;
+          function cancelClose() {
+            if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          }
+          function scheduleClose(target) {
+            closeTimer = setTimeout(function () { target.closePopup(); }, 200);
+          }
           layer.on('mouseover', function () {
+            cancelClose();
             var center = this.getBounds ? this.getBounds().getCenter() : null;
-            this.openPopup(center);
+            if (center) this.getPopup().setLatLng(center);
+            this.openPopup();
           });
-          layer.on('mouseout', function () { this.closePopup(); });
+          layer.on('mouseout', function () { scheduleClose(this); });
+          layer.on('popupopen', function (e) {
+            var el = e.popup.getElement();
+            if (el) {
+              L.DomEvent.on(el, 'mouseover', cancelClose);
+              L.DomEvent.on(el, 'mouseout', function () { scheduleClose(layer); });
+            }
+          });
         }
       }
 
