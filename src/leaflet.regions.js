@@ -42,6 +42,7 @@
         return toUpperSafe(feature.id || props.id || props.key || props.code || props.name || '');
       },
       color: '#4a90e2',
+      defaultVisible: true,
       borderColor: '#555',
       fillOpacity: 1,
       weight: 1,
@@ -196,8 +197,15 @@
       return text;
     },
 
+    _isFeatureHidden: function (rd) {
+      return this.options.defaultVisible === false && !rd.color;
+    },
+
     _styleForFeature: function (feature) {
       var rd = this._dataForFeature(feature);
+      if (this._isFeatureHidden(rd)) {
+        return { stroke: false, fill: false, fillOpacity: 0, weight: 0, color: 'transparent' };
+      }
       var fillColor = rd.color || resolve(this.options.color, feature, rd) || '#4a90e2';
       var borderColor = rd.borderColor || rd.strokeColor || resolve(this.options.borderColor, feature, rd) || '#555';
       var fillOpacity = (rd.fillOpacity !== undefined && rd.fillOpacity !== null) ? rd.fillOpacity : this.options.fillOpacity;
@@ -237,11 +245,14 @@
 
     _configureFeature: function (feature, layer) {
       var rd = this._dataForFeature(feature);
+      if (this._isFeatureHidden(rd)) return;
       var popupContent = (rd.popupContent !== undefined && rd.popupContent !== null)
         ? rd.popupContent
         : resolve(this.options.popupContent, feature, rd);
 
       if (popupContent && this.options.popupAction) {
+        var contentStr = typeof popupContent === 'string' ? popupContent.trim() : popupContent;
+        if (!contentStr) return;
          layer.bindPopup(popupContent, { maxWidth: 320 });
         if (this.options.popupAction === 'hover') {
           var closeTimer = null;
